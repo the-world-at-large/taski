@@ -1,14 +1,26 @@
+import os
+
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+DEBUG = False
 
-SECRET_KEY = 'django-insecure-j_89af+30&&4qm*8z9_(^zz8p4-ho8z_m6ylm0s$h!-p@on1_^'
+ALLOWED_HOSTS = ['158.160.77.66', '127.0.0.1', 'localhost', 'wwwooowww.hopto.org']
 
-DEBUG = True
+sentry_sdk.init(
+    dsn="https://2ea56e1892fdd4a9230d3fe64ec3e388@o4505760361086976.ingest.sentry.io/4505760371048448",
+    integrations=[
+	DjangoIntegration(),
+    ],
+    traces_sample_rate=1.0,
+    send_default_pii=True
+)
 
-ALLOWED_HOSTS = []
-
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # Application definition
 
@@ -103,7 +115,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static_backend'
+STATIC_ROOT = BASE_DIR / 'static_backend'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
